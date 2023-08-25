@@ -1,0 +1,21 @@
+create table student (Enroll_no number primary key, Roll number, Branch varchar2(5), Name varchar2(25), Mob number);
+
+insert into student values(2170110001, 101, 'CE', 'SUJAL LUHAR', 8401994158);
+
+insert into student values(2170110002, 102, 'CE', 'PRIYANSH DAHAKE', 7567667847);
+
+insert into student values(1170110013, 103, 'IT', 'SHREY PATEL', 9876520132);
+
+insert into student values(1170110014, 104, 'IT', 'JAY PATEL', 9973420132);
+
+insert into student values(1170110015, 105, 'IT', 'KENISH PATEL', 9946701210);
+
+insert into student values(2170110023, 106, 'CE', 'KRISHNA PATEL', 9874890132);
+
+insert into student values(2170110056, 107, 'CE', 'SOMYA PATEL', 9991110003);
+
+insert into student values(2170110010, 108, 'CE', 'RAJIV SINGH', 893245610);
+
+insert into student values(1170110034, 109, 'IT', 'JAY SOMPURA', 6782105641);
+ 
+insert into student values(1170110035, 110, 'IT', 'RAJKUMAR SINGH', 3214567820);

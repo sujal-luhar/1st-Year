@@ -1,0 +1,23 @@
+create table book(Bookid number primary key, BTitle varchar2(40), Publication varchar2(20), Author varchar2(20), Copies number, Cost number);
+
+insert into book values(20341, 'The Alchemist', 'HarperCollins', 'P. Coelho', 2, 250);
+
+insert into book values(20342, 'Northhanger Abbey', 'Harvard Uni Press', 'Jane Austen', 3, 950);
+
+insert into book values(20343, 'Pride and prejustice','Harvard Uni Press' , 'Jane Austen', 2, 1000);
+
+insert into book values(20344, 'Emma', 'Harvard Uni Press', 'Jane Austen', 2, 1000);
+
+insert into book values(20345, 'The Cortex and the Critical point', 'Mit press', 'John M Beggs', 2, 100);
+
+insert into book values(20346, 'Electrify', 'Mit press', 'S. Griffith', 1, 250);
+
+insert into book values(20347, 'Tommorows parties', 'Mit press', 'J. strathon', 1, 999);
+
+insert into book values(20348, 'Delhi Reborn', 'Stanford uni Press', 'R. Geva', 2, 800);
+
+insert into book values(20349, 'Global Wartimes', 'Stanford uni Press', 'Victoria Whales', 3, 500 );
+
+insert into book values(20350, 'Motherhood ', 'Stanford uni Press', 'N.Garnes', 2, 600);
+
+insert into book values(20351, 'The History Of Japan', 'Stanford uni Press', 'G. Sansom', 2, 750);

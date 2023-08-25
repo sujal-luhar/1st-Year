@@ -1,0 +1,21 @@
+create table StudentLiving(S_Mob number primary key,  S_Name varchar2(30), S_College varchar2(30), PropertyID number);
+
+insert into StudentLiving values( 8162143977, 'Buzz Aldrin', 'Harvard', 54321);
+
+insert into StudentLiving values( 4179442583, 'Ilene S. Gordon', 'Harvard', 54321);
+
+insert into StudentLiving values( 8166247261, 'Shirley Ann Jackson', 'Harvard', 54321);
+
+insert into StudentLiving values( 5735031620, 'Robin Chase', 'Princeton', 54324);
+
+insert into StudentLiving values( 4178913419, 'Kofi Annan', 'Stanford', 54324);
+
+insert into StudentLiving values( 4176357737, 'Katharine McCormick', 'Stanford', 54326);
+
+insert into StudentLiving values( 4172546921, 'Andrea Wong', 'Princeton', 54326);
+
+insert into StudentLiving values( 3145654716, 'Michael J. Massimino', 'Oxford', 54328);
+
+insert into StudentLiving values( 6608511813, 'Jonah Peretti', 'Oxford', 54328);
+
+insert into StudentLiving values( 4172753986, 'Richard Feynman', 'Mit', 54328);

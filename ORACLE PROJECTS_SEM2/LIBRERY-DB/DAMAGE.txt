@@ -1,0 +1,43 @@
+Create table damage(D_Enroll number, D_SName varchar2(25), D_BookT varchar2(32), D_BPublication varchar2(20), Paid number);
+
+create or replace procedure insertDamage(A in number, B in varchar, C in varchar, D in varchar, E in number)
+is
+begin
+	insert into damage values(A,B,C,D,E);
+end;
+/
+
+set serveroutput on;
+
+declare
+EN_NO borrow.SEnroll%type;
+S_NAME borrow.SName%type;
+B_TITLE borrow.BookT%type;
+B_ID borrow.Bid%type;
+B_PUBLICATION book.Publication%type;
+B_PAID book.Cost%type;
+
+cursor penaltyrecord is
+	select borrow.SEnroll, borrow.SName, borrow.BookT, book.Publication, book.Cost from borrow, book where borrow.SEnroll=EN_NO and borrow.Bid=B_ID;
+
+begin
+
+	EN_NO := &EN_NO;
+	B_ID := &B_ID;
+
+	open penaltyrecord;
+
+		fetch penaltyrecord into EN_NO, S_NAME, B_TITLE, B_PUBLICATION, B_PAID;
+		B_PAID := B_PAID + (B_PAID/4);
+		insertDamage(EN_NO, S_NAME, B_TITLE, B_PUBLICATION, B_PAID);
+		delete from borrow where borrow.SEnroll=EN_NO and borrow.Bid=B_ID;
+
+	close penaltyrecord;
+
+end;
+/
+
+drop table student;
+drop table book;
+drop table borrow;
+drop table damage;

@@ -1,0 +1,46 @@
+create table client(Mob number primary key, CName varchar2(30), Address varchar2(30), RunningProj number);
+
+insert into client values( 4172225729, 'Fredrik Eklund', 'GALENA', 2);
+
+insert into client values( 8164594011, 'Stefan Aarnio', 'GLADSTONE', 1);
+
+insert into client values( 4174357756, 'Desiree Patno', 'POWELL', 1);
+
+insert into client values( 8165820450, 'Tom Ferry', 'KANSAS CITY', 4);
+
+insert into client values( 5732176047, 'Chad Carroll', 'CAMPBELL', 3);
+
+
+create or replace procedure plus1(RUN in number, MOBNO in number)
+is
+begin
+	update client set RunningProj=RUN where MOB=MOBNO;
+end;
+/
+
+set serveroutput on;
+
+declare
+NO client.Mob%type;
+MOBNO client.Mob%type;
+CNM client.Cname%type;
+CADDR client.Address%type;
+RUN client.RunningProj%type;
+
+cursor Cdetails is
+	select client.Mob, client.CName, client.Address, client.RunningProj from client where client.Mob=NO;
+
+begin
+
+	NO := &NO;
+	
+	open Cdetails;
+
+		fetch Cdetails into MOBNO, CNM, CADDR, RUN;
+		RUN := RUN + 1;
+		plus1(RUN, MOBNO);
+
+	close Cdetails;
+
+end;
+/

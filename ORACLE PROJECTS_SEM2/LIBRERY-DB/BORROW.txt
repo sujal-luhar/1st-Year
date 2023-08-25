@@ -1,0 +1,49 @@
+Create table borrow(SEnroll number, SName varchar2(25), SMob number, Bid number, BookT varchar2(32));
+
+create or replace procedure insertBorrow(A in number, B in varchar, C in number, D in number, E in varchar)
+is
+begin
+	insert into borrow values(A, B, C, D, E);
+end;
+/
+
+create or replace procedure minus1(Copy in number, BID in number)
+is
+begin
+	update book set Copies=Copy where Bookid=BID;
+end;
+/
+
+set serveroutput on;
+
+declare
+EN_NO student.Enroll_no%type;
+S_NAME student.Name%type;
+S_MOB student.Mob%type;
+B_ID book.Bookid%type;
+B_TITLE book.BTitle%type;
+B_COPIES book.Copies%type;
+
+cursor details is
+	select student.enroll_no, student.name, student.Mob, book.Bookid, book.BTitle, book.Copies from student, book where student.enroll_no=EN_NO and book.Bookid=B_ID;
+
+begin
+
+	EN_NO := &EN_NO;
+	B_ID := &B_ID;
+	
+	open details;
+
+		fetch details into EN_NO, S_NAME, S_MOB, B_ID, B_TITLE, B_COPIES;
+		if (B_COPIES = 0) then
+			dbms_output.put_line('NO COPIES LEFT!!!');
+		else
+			B_COPIES := B_COPIES-1;
+			insertBorrow(EN_NO, S_NAME, S_MOB, B_ID, B_TITLE);
+			minus1(B_COPIES, B_ID);
+		end if;
+
+	close details;
+
+end;
+/

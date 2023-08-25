@@ -1,0 +1,38 @@
+create or replace procedure BookReturn(R_Enroll in number, R_Bid in number)
+is
+begin
+	delete from borrow where borrow.SEnroll=R_Enroll and borrow.Bid=R_Bid;
+end;
+/
+
+create or replace procedure plus1(Copy in number, BID in number)
+is
+begin
+	update book set Copies=Copy where Bookid=BID;
+end;
+/
+
+declare
+EN_NO borrow.SEnroll%type;
+B_ID borrow.Bid%type;
+B_COPIES book.Copies%type;
+
+cursor increment is
+	select book.Copies from book where student.enroll_no=EN_NO and book.Bookid=B_ID;
+
+begin
+
+	EN_NO := &EN_NO;
+	B_ID := &B_ID;
+
+	open increment;
+
+		fetch increment into B_COPIES;
+		B_COPIES := B_COPIES+1;
+		BookReturn(EN_NO, B_ID);
+		plus1(B_COPIES, B_ID);
+
+	close increment;
+
+end;
+/

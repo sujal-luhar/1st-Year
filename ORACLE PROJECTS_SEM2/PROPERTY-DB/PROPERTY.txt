@@ -1,0 +1,71 @@
+create table property(PropertyID number primary key, Mob number, AddrProp varchar2(30), Type varchar2(30), Profit Number, Fees number);
+
+insert into property values(54321, 4172225729, 'Boston', 'Student Living', 400000, 100000);
+
+insert into property values(54322, 4172225729, 'Bridgeport', 'Tenant', 350000, 90000);
+
+insert into property values(54323, 8164594011, 'Providence', 'Tenant', 425000, 110000);
+
+insert into property values(54324, 4174357756, 'Washington', 'Student Living', 280000, 70000);
+
+insert into property values(54325, 8165820450, 'Atlanta', 'Tenant', 500000, 120000);
+
+insert into property values(54326, 8165820450, 'Riverside', 'Student Living', 300000, 105000);
+
+insert into property values(54327, 8165820450, 'Miami', 'Tenant', 420000, 123000);
+
+insert into property values(54328, 8165820450, 'North Port', 'Student Living', 375000, 110000);
+
+insert into property values(54329, 5732176047, 'Naples', 'Tenant', 510000, 130000);
+
+insert into property values(54330, 5732176047, 'Providence', 'Tenant', 260000, 75000);
+
+insert into property values(54331, 5732176047, 'Washington', 'Tenant', 470000, 135000);
+
+set serveroutput on;
+
+declare
+PID property.PropertyID%type;
+CNM client.Cname%type;
+CADDR client.Address%type;
+RUN client.RunningProj%type;
+MoNum property.Mob%type;
+PADDR property.AddrProp%type;
+PTYPE varchar2(30);
+PROF property.Profit%type;
+FEE property.Fees%type;
+tp number;
+
+cursor last is
+	select property.PropertyID from property;
+
+begin
+
+	MoNum := &MoNum;
+	CNM := '&CNM';
+	CADDR := '&CADDR';
+	RUN := 1;
+	insert into client values(MoNum, CNM, CADDR, RUN);
+
+	open last;
+	loop
+		fetch last into PID;
+		exit when last%notfound;
+	end loop;
+	close last;
+	PID := PID + 1;
+
+	PADDR := '&PADDR';
+	tp := &tp;
+		case tp
+			when 1 then
+				PTYPE := 'Student Living';
+			when 2 then
+				PTYPE := 'Tenant';
+		end case;
+	PROF := 0;
+	FEE := &FEE;
+
+	insert into property values(PID, MoNum, PADDR, PTYPE, PROF, FEE);
+end;
+/

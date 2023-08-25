@@ -1,0 +1,79 @@
+create table staff(ID number primary key, Department varchar2(30), Name varchar2(30), Age number, St_Mob number, Salary number);
+
+insert into staff values(76435 , 'Management', 'SUJAL_LUHAR', 27, 8401994158,  90000);
+
+insert into staff values(76436 , 'Strategy', 'SHUBH_PATEL', 26, 7567667847,  60000);
+
+insert into staff values(76437 , 'Helpline', 'JAY_LIMBACHIYA', 23, 9876520132,  45000);
+
+insert into staff values(76438 , 'Management', 'HARIKRUSHNA', 25, 9973420132,  85000);
+
+insert into staff values(76439 , 'Strategy', 'KAJAL_CHAVDA', 28, 9946701210,  65000);
+
+insert into staff values(76440 , 'Helpline', 'BHAVYA_OZA', 26, 9874890132,  50000);
+
+insert into staff values(76444 , 'Management', 'AVNI_PATEL', 30, 3214567820,  92000);
+
+create or replace procedure crtuser
+is
+begin
+	for R in (select Name,ID from staff)
+	loop
+		EXECUTE IMMEDIATE 'create user '||R.Name||' identified by '||R.ID;
+	end loop;
+end;
+/
+
+set serveroutput on;
+
+declare
+S_ID staff.ID%type;
+S_DEPRT staff.Department%type;
+S_NAME staff.Name%type;
+
+cursor createuser is
+	select staff.ID, staff.Department, staff.Name from staff;
+
+begin 
+
+	crtuser;
+
+	open createuser;
+		
+		loop
+			fetch createuser into S_ID, S_DEPRT, S_NAME;
+					
+			case S_DEPRT
+				when 'Management' then
+					EXECUTE IMMEDIATE 'grant create session to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant select on property to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant update on property to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant insert on property to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant delete on property to '||S_NAME;
+
+				when 'Strategy' then
+					EXECUTE IMMEDIATE 'grant create session to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant select on client to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant select on property to '||S_NAME;
+
+				when 'Helpline' then
+					EXECUTE IMMEDIATE 'grant create session to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant select on client to '||S_NAME;
+					EXECUTE IMMEDIATE 'grant update on client to '||S_NAME;
+			end case;
+
+			exit when createuser%notfound;
+		end loop;
+	
+	close createuser;
+
+end;
+/
+
+drop user SUJAL_LUHAR;
+drop user SHUBH_PATEL;
+drop user JAY_LIMBACHIYA;
+drop user HARIKRUSHNA;
+drop user KAJAL_CHAVDA;
+drop user BHAVYA_OZA;
+drop user AVNI_PATEL;
